@@ -84,7 +84,7 @@ public class TestController {
 
 这个应用在接受到数据时，会将数据打印到控制台
 
-![](assets/xxe_data.png)
+![](xxe1/xxe_data.png)
 
 ###  防御方法
 
@@ -97,7 +97,7 @@ Document document = db.parse(in);
 
 serFeature是关键，设置了过后，再解析xml时会直接报错，如下：
 
-![](assets/xxe_defence.png)
+![](xxe1/xxe_defence.png)
 
 
 ### 参考
