@@ -115,8 +115,69 @@ public class JsonToObj {
 
 可见加了@type属性就能调用对应对象的setXXX方法，那这个@type属性具体是干嘛的呢?其实从上面的demo应该也能得知一二了，就是指定该json字符串要反序列化到哪个类。这个属性让我们的漏洞利用如鱼得水～
 
-> ps: fastjson反序列化默认只能反序列化共有属性，如果想要对应的私有属性也被反序列话，则需要下面这样添加一个Feature.SupportNonPublicField参数：
+> ps: fastjson反序列化默认只能反序列化公共属性，如果想要对应的私有属性也被反序列话，则需要下面这样添加一个Feature.SupportNonPublicField参数：
 > `JSON.parseObject(myJSON, User.class, Feature.SupportNonPublicField);`
+
+
+### 0x03 fastjson反序列化——JNDI攻击向量
+
+有了上面的知识铺垫，大家应该能够想到怎么利用fastjson的反序列化执行命令了吧?就是利用@type属性以及自动调用setXXX方法，如果我们能够找到一个类，而这个类的某个setXXX方法中通过我们的精心构造能够完成命令执行不就行了嘛~
+
+`com.sun.rowset.JdbcRowSetImpl`就是这么一个类，这个类中有两个set方法，分别是setDataSourceName()与setAutoCommit(),我们看一下相关实现：
+
+setDatasourceName
+
+```java
+    public void setDataSourceName(String name) throws SQLException {
+
+        if (name == null) {
+            dataSource = null;
+        } else if (name.equals("")) {
+           throw new SQLException("DataSource name cannot be empty string");
+        } else {
+           dataSource = name;
+        }
+
+        URL = null;
+    }
+```
+
+setAutoCommit
+
+```java
+    public void setAutoCommit(boolean var1) throws SQLException {
+        if (this.conn != null) {
+            this.conn.setAutoCommit(var1);
+        } else {
+            this.conn = this.connect();
+            this.conn.setAutoCommit(var1);
+        }
+
+    }
+```
+
+这里的setDataSourceName就是设置了dataSourceName,然后在setAutoCommit中进行了connect操作，我们跟进看一下
+
+```java
+    protected Connection connect() throws SQLException {
+        if (this.conn != null) {
+            return this.conn;
+        } else if (this.getDataSourceName() != null) {
+            try {
+                InitialContext var1 = new InitialContext();
+                DataSource var2 = (DataSource)var1.lookup(this.getDataSourceName());
+                return this.getUsername() != null && !this.getUsername().equals("") ? var2.getConnection(this.getUsername(), this.getPassword()) : var2.getConnection();
+            } catch (NamingException var3) {
+                throw new SQLException(this.resBundle.handleGetObject("jdbcrowsetimpl.connect").toString());
+            }
+        } else {
+            return this.getUrl() != null ? DriverManager.getConnection(this.getUrl(), this.getUsername(), this.getPassword()) : null;
+        }
+    }
+```
+
+可以看到这里connect方法中有典型的jndi的lookup方法调用，且参数就是我们在setDataSourceName中设置的dataSourceName。
+
 
 
 
