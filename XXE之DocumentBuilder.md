@@ -3,7 +3,57 @@ java安全之xxe
 
 xxe这种漏洞无论是在php中还是java中，审计起来应该都是有迹可循的，在php中全局搜索特定函数，在java中需要找解析xml文档的类有没有被使用，所以，我们首先需要知道java有哪些常见的解析xml的类。
 
-### javax.xml.parsers.DocumentBuilder
+### DocumentBuilder基础使用
+
+```java
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+        File file = new File("./payload.xml");
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(file);
+        // 根据tag名获取标签，是不是很像js中的getElementByTagName函数
+        NodeList nodeList = doc.getElementsByTagName("person");
+        Element element = (Element) nodeList.item(0);
+
+        System.out.println("姓名：" + element.getElementsByTagName("name").item(0).getFirstChild().getNodeValue());
+        System.out.println("年龄：" + element.getElementsByTagName("age").item(0).getFirstChild().getNodeValue());
+    }
+}
+```
+
+其中payload.xml文件内容如下：
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE root [
+        <!ENTITY test SYSTEM "file:///c:/windows/win.ini">
+        ]>
+<person>
+    <name>axin</name>
+    <age>&test;</age>
+</person>
+```
+
+这样就会读取本机的win.ini文件并打印到控制台：
+
+![](xxe1/win_ini.png)
+
+
+### javax.xml.parsers.DocumentBuilder 案例2
 
 这个类导致的xxe漏洞感觉挺多的。微信支付，以及CVE-2017-12629都是由于这个类没有进行安全设置导致的。
 
@@ -26,7 +76,7 @@ public class ReadxmlByDom {
     static{
         try {
             dbFactory = DocumentBuilderFactory.newInstance();
-            dbFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            // dbFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             db = dbFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -85,6 +135,8 @@ public class TestController {
 这个应用在接受到数据时，会将数据打印到控制台
 
 ![](xxe1/xxe_data.png)
+
+
 
 ###  防御方法
 
