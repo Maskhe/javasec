@@ -152,4 +152,6 @@ https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_E
 
 知道了这些类怎么解析xml，**我们在审计的时候就可以搜索对应的jar包，然后进一步看xml解析的类有没有被调用，被调用了然后再看对应的接口参数是否可控，如果可控还要观察这些解析类有没有相应的防御措施，比如禁用了外部实体等等**，关于XXE的防御，我们另起一节单独说说....
 
-参考1：https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md
+**引申阅读：**
+
+https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md

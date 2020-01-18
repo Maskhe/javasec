@@ -84,3 +84,7 @@ saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", 
 更详细的防御手册：https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md
 
 虽然，针对不同类的防御方法有些许出入，但是核心不变，所以，你今天掌握了核心科技了吗~
+
+**拓展阅读：**
+
+https://www.leadroyal.cn/?p=562
