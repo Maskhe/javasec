@@ -1,4 +1,8 @@
 # javasec
+
+![GitHub](https://img.shields.io/github/license/Maskhe/javasec)
+![](https://img.shields.io/badge/%E5%85%AC%E4%BC%97%E5%8F%B7-%E4%B8%80%E4%B8%AA%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6%E5%91%98-brightgreen)
+
 这是我在学习java安全审计的一些总结，每篇文章可能都不会很长，可能就只是讲一个知识点，但是文章越短，我才越容易坚持下去把这系列文章写完～
 
 本系列文章不求把每个细节都覆盖到，但求把提到的每个知识点用通俗易懂的话阐述出来
