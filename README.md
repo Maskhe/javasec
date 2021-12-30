@@ -9,22 +9,70 @@
 
 文章体系规划(待完善）：
 #### JAVA反射机制
+
+[java反射机制](1.java反射机制.md)
+
 #### JAVA动态代理机制
 #### JAVA序列化与反序列化机制
 常见的pop gadgets以及一些反序列化漏洞案例
+
+[java序列化与反序列化](2.java序列化与反序列化.md)
+
+[apache commons-collections中的反序列化利用链](3. apache commons-collections中的反序列化.md)
+
+[Apache Dubbo反序列化漏洞分析](4.Apache Dubbo反序列化漏洞分析.md)
+
+[log4j的反序列化漏洞分析](4.log4j的反序列化.md)
+
+
+
+#### IDEA调试技巧
+
+[IDEA调试技巧1](5.IDEA调试技巧1.md)
+
+[IDEA调试技巧2——远程调试](5.IDEA调试技巧2——远程调试.md)
+
+
+
 #### RMI基础
+
+[java rmi基础](6.java rmi基础.md)
+
 #### 攻击RMI的方式
+
 结合自己写的demo以及真实漏洞案例
+
+[攻击rmi的方式](7.攻击rmi的方式.md)
+
 #### JNDI注入
 
 几句话讲解原理，再结合几个真实漏洞案例：fastjson、spring的jndi注入案例
+
+[jndi注入](8.jndi注入.md)
+
+[fastjson-1.2.24反序列化漏洞](9.fastjson-1.2.24反序列化漏洞.md)
+
 #### JMX的安全问题
 
-#### JDK中其它的一些反序列化
+[jmx安全问题](10.jmx安全问题.md)
 
 #### XXE
 
 几种常见的解析xml的jar包，以及他们的漏洞点，防御手法
+
+[XXE之DocumentBuilder](14.XXE之DocumentBuilder.md)
+
+[XXE之XML解析常用库的使用案例](15.XXE之XML解析常用库的使用案例.md)
+
+[XXE之setFeature防御](16.XXE之setFeature防御.md)
+
+
+
+#### JDK中其它的一些反序列化
+
+[XMLDecoder反序列化](17.XMLDecoder反序列化.md)
+
+[Weblogic之XMLDecoder反序列化1（CVE-2017-3506)](18.Weblogic之XMLDecoder反序列化1_CVE-2017-3506.md)
 
 #### JAVA表达式安全问题
 
@@ -50,5 +98,4 @@ weblogic系列、spring系列、fastjson系列、jackson系列、solr、jboss、
 
 
 ![](wechat.png)
-
 
