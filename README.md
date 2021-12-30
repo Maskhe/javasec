@@ -18,9 +18,9 @@
 
 [java序列化与反序列化](2.java序列化与反序列化.md)
 
-[apache commons-collections中的反序列化利用链](3. apache commons-collections中的反序列化.md)
+[apache commons-collections中的反序列化利用链](3.%20apache%20commons-collections中的反序列化.md)
 
-[Apache Dubbo反序列化漏洞分析](4.Apache Dubbo反序列化漏洞分析.md)
+[Apache Dubbo反序列化漏洞分析](4.Apache%20Dubbo反序列化漏洞分析.md)
 
 [log4j的反序列化漏洞分析](4.log4j的反序列化.md)
 
@@ -36,7 +36,7 @@
 
 #### RMI基础
 
-[java rmi基础](6.java rmi基础.md)
+[java rmi基础](6.java%20rmi基础.md)
 
 #### 攻击RMI的方式
 
