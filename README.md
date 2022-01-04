@@ -13,6 +13,9 @@
 [java反射机制](1.java反射机制.md)
 
 #### JAVA动态代理机制
+
+[java动态代理](java动态代理.md)
+
 #### JAVA序列化与反序列化机制
 常见的pop gadgets以及一些反序列化漏洞案例
 
